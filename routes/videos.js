@@ -49,7 +49,8 @@ router.post("/", (req, res) => {
     id: uuid(),
     title: title,
     channel: "Aiden Thompson",
-    image: "../public/image1.jpg",
+    image:
+      "https://unit-3-project-api-0a5620414506.herokuapp.com/images/image2.jpg",
     description: description,
     views: 0,
     likes: 0,

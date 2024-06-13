@@ -1,5 +1,7 @@
+import { timeStamp } from "console";
 import express from "express";
 import fs from "fs";
+import { v4 as uuid } from "uuid";
 
 const router = express.Router();
 
@@ -21,5 +23,35 @@ router.get("/:id", (req, res) => {
   res.json(videoDetail);
 });
 
+router.post("/:id/comments", (req, res) => {
+  const { name, comment } = req.body;
+
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({
+      message: "Incomplete POST body",
+      requiredProperties: ["comment", "name"],
+    });
+  }
+
+  const time = new Date().getTime();
+
+  const newComment = {
+    name: name,
+    comment: comment,
+    id: uuid(),
+    timeStamp: time,
+  };
+
+  const newCommentJson = JSON.stringify(newComment);
+
+  const id = req.params.id;
+  const videoDetail = parsedVideos.find((video) => id === video.id);
+  const videoComments = videoDetail.comments;
+  videoComments.push(newComment);
+
+  fs.writeFileSync("./data/video-details.json", JSON.stringify(parsedVideos));
+
+  res.json(newComment);
+});
 
 export default router;

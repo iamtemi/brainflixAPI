@@ -3,6 +3,8 @@ import fs from "fs";
 
 const router = express.Router();
 
+
+
 router.get("/", (req, res) => {
   const videosJson = fs.readFileSync("./data/video-details.json");
   const parsedVideos = JSON.parse(videosJson);

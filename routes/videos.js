@@ -8,6 +8,7 @@ const router = express.Router();
 const videosJson = fs.readFileSync("./data/video-details.json");
 const parsedVideos = JSON.parse(videosJson);
 const time = new Date().getTime();
+const randomNumber = () => Math.floor(Math.random() * 9);
 
 // GET VIDEOS
 router.get("/", (req, res) => {
@@ -49,8 +50,9 @@ router.post("/", (req, res) => {
     id: uuid(),
     title: title,
     channel: "Aiden Thompson",
-    image:
-      "https://unit-3-project-api-0a5620414506.herokuapp.com/images/image2.jpg",
+    image: `http://${process.env.BASE_URL}:${
+      process.env.PORT
+    }/image${randomNumber()}.jpg`,
     description: description,
     views: 0,
     likes: 0,
